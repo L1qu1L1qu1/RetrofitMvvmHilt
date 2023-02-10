@@ -11,20 +11,24 @@ import com.example.retrofitmvvmhilt.api.Movie
 import com.example.retrofitmvvmhilt.api.MyInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(var myInterface: MyInterface): ViewModel() {
-    var mutableStateListOf = mutableStateListOf<Movie>()
-
-    fun getMovies(){
-        viewModelScope
-            .launch(IO){
 
 
-              mutableStateListOf.addAll(myInterface.getMovie())
+    fun getMovies():Flow<Movie>{
 
+return flow {
 
-        }
+    myInterface.getMovie().collect {
+     emit(it)
+    }
+
+}
+
     }
 }

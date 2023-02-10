@@ -19,6 +19,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
 
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+
+
+
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,12 +42,22 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun MyList( movieViewModel:MovieViewModel = hiltViewModel()){
-   movieViewModel.getMovies()
-    LazyColumn(){
-        items(movieViewModel.mutableStateListOf){
-            Text(text = it.name)
-        }
+//   movieViewModel.getMovies()
+//    LazyColumn(){
+//        items(movieViewModel.mutableStateListOf){
+//            Text(text = it.name)
+//        }
+//    }
+    launch() {
+        movieViewModel.getMovies().collect{
+            println(it)}
     }
+
+
+
+
+
+
 
 
 }

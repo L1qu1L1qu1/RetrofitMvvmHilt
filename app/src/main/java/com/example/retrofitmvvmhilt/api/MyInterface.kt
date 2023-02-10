@@ -1,8 +1,9 @@
 package com.example.retrofitmvvmhilt.api
 
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 
 interface MyInterface {
 @GET("movielist.json")
-suspend fun getMovie():List<Movie>
+ fun getMovie(): Flow<Movie>
 }
